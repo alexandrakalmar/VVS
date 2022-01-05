@@ -6,7 +6,7 @@ import java.io.*;
 //import java.awt.color.*;
 
 public class WebServer extends Thread {
-	protected Socket clientSocket;
+	protected Socket clientSocket; //mostenita de la Thread => de aceea avem protected
 	private String state;
 	private ServerSocket serverSocket;
 	private static WebServer instance;
@@ -14,7 +14,7 @@ public class WebServer extends Thread {
 	
 	private WebServer(Socket clientSoc) {
 		clientSocket = clientSoc;
-		start();
+		start(); //metoda mostenita din clasa Thread trebuie mentionata in constructor
 	}
 	public WebServer()
 	{
@@ -25,7 +25,7 @@ public class WebServer extends Thread {
 	{
 		if(instance==null)
 		{
-			instance = new WebServer();
+			instance = new WebServer(); //creeaza un obiect nou de tip WebServer
 		}
 		return instance;
 	}
@@ -34,38 +34,35 @@ public class WebServer extends Thread {
 	{
 		state="Maintanance";
 	}
-	//public void startServer()
-	//{
-	//	state="Running";
-	//}
-		public void startServer() {
+	public void startServer() {
         state = "Running";
 
         try {
-            serverSocket = new ServerSocket(55555);
+            serverSocket = new ServerSocket(9999);  //initializez webserve-ul cu portul 9999
             System.out.println("Connection Socket Created");
             try {
                 while (true) {
                     System.out.println("Waiting for Connection");
-                    new WebServer(serverSocket.accept()).start();
+                    new WebServer(serverSocket.accept()).start(); //asteapta sa se creeze o conexiune pt socket-ul asta 
+                    //si o accepta => apoi start() face ca thread-ul sa inceapa executia
                 }
-            } catch (SocketException e) {
-                if (serverSocket.isClosed())
+            } catch (SocketException e) { 
+                if (serverSocket.isClosed()) //returneaza true daca socket-ul a fost inchis
                     System.out.println("Connection Closed.");
-            } catch (IOException e) {
+            } catch (IOException e) { 
                 System.err.println("Accept failed.");
                 System.exit(1);
             }
         } catch (IOException e) {
-            System.err.println("Could not listen on port: 55555.");
+            System.err.println("Could not listen on port: 9999.");
             System.exit(1);
         } finally {
             try {
-                if (serverSocket != null) {
-                    serverSocket.close();
+                if (serverSocket != null) { //finally se executa indiferent de exceptia pe care a prins-o din try-uri
+                    serverSocket.close(); 
                 }
             } catch (IOException e) {
-                System.err.println("Could not close port: 55555.");
+                System.err.println("Could not close port: 9999.");
                 System.exit(1);
             }
         }
@@ -80,6 +77,9 @@ public class WebServer extends Thread {
     }
 
     public void endServerMaintenance() {
+        state = "Running";
+    }
+    public void runningServer() {
         state = "Running";
     }
 	public void run() {
