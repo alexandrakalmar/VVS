@@ -1,0 +1,46 @@
+  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<style>
+		body {
+		  background-color: pink;
+		}
+
+		h1 {
+		  color: black;
+		  margin-right: 23px;
+		}
+		
+		button {
+		background-color: #ff66cc;
+		color: black;
+		padding: 15px 32px;
+		text-align: center;
+		margin: 50px 550px;
+		}
+	</style>
+    <meta charset="UTF-8">
+    <!-- <title>Index</title> -->
+ 
+</style>
+	<title>Index</title>
+	<meta http-equiv="refresh" content="5; url = http://192.168.0.103:9999/second.html" />
+</head>
+<body>
+<div style="position:relative;  left:1px; top:50px;">
+<h1 align="center">Main Page</h1>
+</div>
+<div style="position:relative;  left:30px; top:400px;">
+<a href="http://192.168.0.103:9999/second.html">Second page</a></br>
+</div>
+<button id="textChanger">Press!</button>
+<div id="firstDiv">The text that will be changed.</div>
+<p>Other text...</p>
+<script>
+	document.getElementById("textChanger").onclick=function(){
+		document.getElementById("firstDiv").innerHTML= "Text is changed";
+	}
+</script>
+</body>
+</html>
